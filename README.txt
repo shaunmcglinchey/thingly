@@ -1,4 +1,4 @@
-Thingy-node is a Node.js Express RESTful API backend for tracking a list of to-do items.
+Thingy-node is a Node.js Express RESTful API backend for managing a list of to-do items.
 
 Acknowledgements:
 Thingy-node was inspired by the excellent Beerlocker tutorial by Scott Smith:
