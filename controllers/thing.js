@@ -8,7 +8,7 @@ exports.postThings = function(req, res) {
     // Use our Things model
     var thing = new Thing();
 
-    // instantiate our object with the values from our incoming POST request
+    // populate the properties on our object with the values from the incoming POST request
     thing.description = req.body.description;
     thing.note = req.body.note;
 
