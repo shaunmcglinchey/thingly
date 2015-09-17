@@ -75,12 +75,11 @@ thingRoute.get(function(req, res) {
 
 // Create a PUT endpoint /api/things/:thing_id for updating a single thing
 thingRoute.put(function(req, res) {
-    // First fetch the thing that we want to update
+    // Using our Thing model fetch the thing that we want to update
     Thing.findById(req.params.thing_id, function(err, thing) {
        if (err)
          res.send(err);
 
-        console.log('new description: ' + req.body.description);
        // Update the thing's description
        thing.description = req.body.description;
 
@@ -94,6 +93,16 @@ thingRoute.put(function(req, res) {
     });
 });
 
+// Create a DELETE endpoint /api/things/:thing_id for deleting a single thing
+thingRoute.delete(function(req, res) {
+    // Using our Thing model fetch the thing that we want to delete
+    Thing.findByIdAndRemove(req.params.thing_id, function(err, thing) {
+        if (err)
+          res.send(err);
+
+        res.json({ message: 'Thing removed from your todo list!' });
+    })
+})
 
 // Register all our routes under the /api path
 app.use('/api', router);
