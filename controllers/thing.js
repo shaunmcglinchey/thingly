@@ -1,7 +1,8 @@
 // Load required packages
 var Thing = require('../models/thing');
 
-//TODO add validation on parameters
+// TODO: add validation on parameters
+// TODO: add checks for injection attacks
 
 // Create a new endpoint for POSTS
 exports.postThings = function(req, res) {
