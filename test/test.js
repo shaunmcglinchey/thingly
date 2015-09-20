@@ -19,7 +19,7 @@ describe('Thing', function() {
             });
     });
 
-    it('should check POST object returns the correct properties in the response', function(done) {
+    it('should check POST object returns valid properties in the response', function(done) {
         api.post(thingsUrl)
             .set('Content-Type','application/x-www-form-urlencoded')
             .send(test_thing)
