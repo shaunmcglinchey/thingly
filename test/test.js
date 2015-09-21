@@ -9,6 +9,9 @@ var thingUrl;
 describe('Thing', function() {
 
     var test_thing  = { description: 'visit Africa', note: 'Go to the Serengeti' };
+    var alternative_thing = { description: 'visit Asia', note: 'Trek in Vietnam' };
+    var nonExistentId = '53fbf4615c3b9f41c381b6a3';
+    var invalidId = '232';
 
     it('should check GET all things response contains an array', function(done) {
         api.get(thingsUrl)
@@ -38,7 +41,7 @@ describe('Thing', function() {
             });
     });
 
-    it('should check GET single object works', function(done) {
+    it('should check GET single object returns valid code and response data', function(done) {
        thingUrl = thingsUrl + '/' + test_thing._id;
        api.get(thingUrl)
            .expect(200)
@@ -50,15 +53,26 @@ describe('Thing', function() {
            });
     });
 
+    it('should check GET single object with invalid identifier returns status 400', function(done) {
+        thingUrl = thingsUrl + '/' + invalidId;
+        api.get(thingUrl)
+            .expect(400,done);
+    });
+
+    it('should check GET single object with non-existent identifier returns status 404', function(done) {
+        thingUrl = thingsUrl + '/' + nonExistentId;
+        api.get(thingUrl)
+            .expect(404,done);
+    });
+
     it('should check UPDATE object works', function(done) {
        thingUrl = thingsUrl + '/' + test_thing._id;
-        console.log(test_thing._id);
        api.put(thingUrl)
            .set('Content-Type','application/x-www-form-urlencoded')
-           .send({description: 'visit Asia'})
+           .send({description: alternative_thing.description})
            .expect(200)
            .end(function(err, res) {
-               expect(res.body).to.have.deep.property('description','visit Asia');
+               expect(res.body).to.have.deep.property('description',alternative_thing.description);
                done();
            });
     });
@@ -71,6 +85,4 @@ describe('Thing', function() {
                done();
            });
     });
-
-
 });
