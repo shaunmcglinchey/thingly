@@ -38,9 +38,21 @@ describe('Thing', function() {
             });
     });
 
+    it('should check GET single object works', function(done) {
+       thingUrl = thingsUrl + '/' + test_thing._id;
+       api.get(thingUrl)
+           .expect(200)
+           .end(function(err, res) {
+               expect(res.body).to.have.property('_id',test_thing._id);
+               expect(res.body).to.have.property('description',test_thing.description);
+               expect(res.body).to.have.property('note',test_thing.note);
+               done();
+           });
+    });
 
     it('should check UPDATE object works', function(done) {
        thingUrl = thingsUrl + '/' + test_thing._id;
+        console.log(test_thing._id);
        api.put(thingUrl)
            .set('Content-Type','application/x-www-form-urlencoded')
            .send({description: 'visit Asia'})
@@ -55,7 +67,7 @@ describe('Thing', function() {
        api.del(thingUrl)
            .expect(200)
            .end(function(err, res) {
-               expect(res.body).to.have.property('message','Thing removed from your todo list!');
+               expect(res.body).to.have.property('message','Item removed from your todo list!');
                done();
            });
     });

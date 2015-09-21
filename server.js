@@ -35,6 +35,19 @@ router.route('/things/:thing_id')
 // Register all our routes under the /api path
 app.use('/api', router);
 
+// Handle exceptions and error
+app.use(function (err, req, res, next) {
+    if(err.status == 404){
+        res.status(404).send(err.message || 'Resource not found');
+    }
+    else if(err.status == 400){
+        res.status(400).send(err.message || 'Bad Client Request');
+    } else {
+        res.send(err.message || 'Sorry, there was a problem on our side. Someone ' +
+        'will investigate the issue. Please try later');
+    }
+});
+
 // Start the server
 app.listen(port);
 console.log('Roll up, roll up! Insert your things todo here: ' + port);
