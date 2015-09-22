@@ -2,10 +2,17 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var thingController = require('./controllers/thing');
+var thingController = require('./controllers/thing')
+var nconf = require('nconf');
+
+// Load our configuration file
+nconf.use('file', { file: './config.json' });
+nconf.load();
+
+var db = nconf.get('db');
 
 // Connect to our mongo DB using mongoose
-mongoose.connect('mongodb://localhost:27017/thingly');
+mongoose.connect(db);
 
 // Create the Express application
 var app = express();
