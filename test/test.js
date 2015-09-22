@@ -77,7 +77,16 @@ describe('Thing', function() {
            });
     });
 
+    it('should check UPDATE object with non-existent identifier returns status 404', function(done) {
+        thingUrl = thingsUrl + '/' + nonExistentId;
+        api.put(thingUrl)
+           .set('Content-Type','application/x-www-form-urlencoded')
+           .send({description: alternative_thing.description})
+           .expect(404,done);
+    });
+
     it('should check DELETE object works', function(done) {
+       thingUrl = thingsUrl + '/' + test_thing._id;
        api.del(thingUrl)
            .expect(200)
            .end(function(err, res) {

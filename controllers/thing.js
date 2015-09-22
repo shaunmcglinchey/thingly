@@ -45,7 +45,6 @@ exports.getThing = function(req, res, next) {
 
     // Check that we have received a valid identifier
     if(!isValidIdentifier(req.params.thing_id)){
-        console.log('invalid id');
         var err = new Error('Invalid ID provided');
         err.status = 400;
         return next(err);
@@ -72,7 +71,7 @@ exports.getThing = function(req, res, next) {
 };
 
 // Create a PUT endpoint /api/things/:thing_id for updating a single thing
-exports.putThing = function(req, res) {
+exports.putThing = function(req, res, next) {
 
     // Check that we have received a valid identifier
     if(!isValidIdentifier(req.params.thing_id)){
