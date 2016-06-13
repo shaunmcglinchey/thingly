@@ -1,10 +1,13 @@
 {
   "name": "thingly",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "body-parser": "^1.14.0",
     "express": "^4.13.3",
-    "mongoose": "^4.1.7",
+    "mongodb": "^2.1.18",
     "nconf": "^0.8.0"
   },
   "devDependencies": {
