@@ -1,26 +1,33 @@
 // Fetch the packages we need
 var express = require('express');
 var mongoose = require('mongoose');
+var MongoClient = require('mongodb').MongoClient;
 var bodyParser = require('body-parser');
 var thingController = require('./controllers/thing')
-var nconf = require('nconf');
-
-// Load our configuration file
-nconf.use('file', { file: './config.json' });
-nconf.load();
-
-var db = nconf.get('db');
 
 // Connect to our mongo DB using mongoose
-mongoose.connect(db);
-
+mongoose.connect('mongodb://mongo:27017/things', function(err, db) {
+    if(!err) {
+        console.log("Mongoose connected");
+    }
+});
+// Connect to the db
+/*
+MongoClient.connect("mongodb://mongo:27017/things", function(err, db) {
+  if(!err) {
+    console.log("We are connected");
+  }
+});
+*/
 // Create the Express application
 var app = express();
 
 // Use the body-parser
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 
 // Define the port our server will run on
 var port = process.env.PORT || 4000;
@@ -29,11 +36,17 @@ var port = process.env.PORT || 4000;
 var router = express.Router();
 
 // Create endpoint handlers for /things
+router.get('/car', function (req, res) {
+  res.send('<html><body>Hello from Node.js container</body></html>');
+});
+
+
 router.route('/things')
     .post(thingController.postThings)
     .get(thingController.getThings);
 
 // Create endpoint handlers for /things/:thing_id
+
 router.route('/things/:thing_id')
     .get(thingController.getThing)
     .put(thingController.putThing)
